@@ -5,10 +5,24 @@ Created on Mon Jul 20 18:22:41 2020
 @author: Gavin
 """
 
-#The Discriminator
+
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+from IPython.display import clear_output
+
+import pandas as pd
+import os
+from keras.optimizers import Adam
+
+from keras.layers import Deconvolution2D, Reshape
+
 from keras.layers import Conv2D, BatchNormalization, Input, GlobalAveragePooling2D, Dense
 from keras.models import Model
 from keras.layers.advanced_activations import LeakyReLU
+
+
+#The Discriminator
 
 # function for building the discriminator layers
 def build_discriminator(start_filters, spatial_dim, filter_size):
@@ -39,7 +53,7 @@ def build_discriminator(start_filters, spatial_dim, filter_size):
 
 
 ##The Generator
-from keras.layers import Deconvolution2D, Reshape
+
 
 def build_generator(start_filters, filter_size, latent_dim):
   
@@ -71,9 +85,6 @@ def build_generator(start_filters, filter_size, latent_dim):
   return Model(inputs=inp, outputs=x)
 
 #The GAN
-import pandas as pd
-import os
-from keras.optimizers import Adam
 
 # load celebrity images attributes
 df_celeb = pd.read_csv('list_attr_celeba.csv')
@@ -126,11 +137,6 @@ generator_celeb, discriminator_celeb, gan_celeb = construct_models(verbose=True)
 
 
 ##The Training Process
-import cv2
-import matplotlib.pyplot as plt
-import numpy as np
-%matplotlib inline
-from IPython.display import clear_output
  
 # number of discriminator updates per alternating training iteration
 DISC_UPDATES = 1  
