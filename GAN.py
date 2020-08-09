@@ -13,13 +13,13 @@ from IPython.display import clear_output
 
 import pandas as pd
 import os
-from keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras import Sequential
 
-from keras.layers import Deconvolution2D, Reshape
+from tensorflow.keras.layers import Conv2DTranspose, Reshape
 
-from keras.layers import Conv2D, BatchNormalization, Input, GlobalAveragePooling2D, Dense
-from keras.models import Model
-from keras.layers.advanced_activations import LeakyReLU
+from tensorflow.keras.layers import Conv2D, BatchNormalization, Input, GlobalAveragePooling2D, Dense, LeakyReLU
+from tensorflow.keras.models import Model
 
 
 #The Discriminator
@@ -59,7 +59,7 @@ def build_generator(start_filters, filter_size, latent_dim):
   
   # function for building a CNN block for upsampling the image
   def add_generator_block(x, filters, filter_size):
-      x = Deconvolution2D(filters, filter_size, strides=2, padding='same')(x)
+      x = Conv2DTranspose(filters, filter_size, strides=2, padding='same')(x)
       x = BatchNormalization()(x)
       x = LeakyReLU(0.3)(x)
       return x
